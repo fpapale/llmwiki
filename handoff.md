@@ -32,8 +32,9 @@ Il motore LLM (`app/services/llm_service.py`) è in grado di funzionare in **due
 
 ## 🐳 Pronto per il Deploy
 Tutto è stato impacchettato e predisposto per girare sul server remoto locale (`192.168.0.68`):
-- È presente un `Dockerfile` (leggero e basato su Python 3.11 slim).
-- È presente un `docker-compose.yml` pre-configurato con i mount dei volumi `/config` e `/vault` in modo che il container FastAPI legga e scriva esattamente i file residenti sul server host, senza corrompere il ciclo di vita del codice.
+- È presente un `Dockerfile` (leggero e basato su Python 3.11 slim) completo di file `.dockerignore` per escludere file non necessari.
+- È presente un `docker-compose.yml` pre-configurato. Esso monta la directory di configurazione in `/config` e **l'intera root del vault** in `/vault`.
+- È stato introdotto un file specifico **`config.docker.yml`**, i cui path sono già ottimizzati in base alla struttura dei mount interni al container.
 
 ## 🧪 Testing e Qualità
 - Tutti i test richiesti (Healthcheck, Config, Endpoints di base e flussi LLM mockati) sono stati implementati utilizzando `pytest`.

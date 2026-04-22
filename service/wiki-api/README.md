@@ -77,4 +77,4 @@ curl -X POST http://127.0.0.1:8080/lint/run
 
 ## Utilizzo sul Server di deploy
 
-Sul server `192.168.0.68` verranno usati `Dockerfile` e `docker-compose.yml`. La cartella di configurazione locale viene montata dentro `/config`, e il vault all'interno di `/vault`.
+Sul server `192.168.0.68` verranno usati `Dockerfile` e `docker-compose.yml`. La cartella di configurazione locale viene montata dentro `/config`, e l'intera root del progetto (`../../`) viene montata all'interno di `/vault`. Viene inoltre utilizzato uno specifico file di configurazione (`config.docker.yml`) i cui path sono già ottimizzati per la struttura interna del container.
