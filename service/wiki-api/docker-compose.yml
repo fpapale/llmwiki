@@ -7,8 +7,7 @@ services:
       - "8080:8080"
     volumes:
       - ../../runtime/config:/config:ro
-      - ../../raw:/vault/raw
-      - ../../wiki:/vault/wiki
+      - ../../:/vault
     environment:
-      - WIKI_API_CONFIG_PATH=/config/config.yaml
+      - WIKI_API_CONFIG_PATH=/config/config.docker.yaml
       - WIKI_API_SECRETS_PATH=/config/secrets.env

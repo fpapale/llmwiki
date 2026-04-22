@@ -1,0 +1,26 @@
+app:
+  name: wiki-api
+  host: 0.0.0.0
+  port: 8080
+  log_level: INFO
+
+paths:
+  vault_root: /vault
+  raw_dir: /vault/raw
+  wiki_dir: /vault/wiki
+  schema_dir: /vault
+  agent_file: /vault/AGENT.MD
+  index_file: /vault/wiki/index.md
+  log_file: /vault/wiki/log.md
+
+llm:
+  enabled: true
+  provider: openrouter
+  base_url: https://openrouter.ai/api/v1
+  model: openai/gpt-4o-mini
+  api_key_env: OPENROUTER_API_KEY
+  timeout_seconds: 120
+
+features:
+  enable_fallback_query: true
+  enable_mock_llm: true
