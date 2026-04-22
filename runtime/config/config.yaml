@@ -15,10 +15,19 @@ paths:
 
 llm:
   enabled: true
-  provider: openai
-  base_url: https://api.openai.com/v1
-  model: gpt-4o-mini
-  api_key_env: OPENAI_API_KEY
+  
+  # Esempio per OpenAI
+  # provider: openai
+  # base_url: https://api.openai.com/v1
+  # model: gpt-4o-mini
+  # api_key_env: OPENAI_API_KEY
+  
+  # Esempio per OpenRouter
+  provider: openrouter
+  base_url: https://openrouter.ai/api/v1
+  model: openai/gpt-4o-mini
+  api_key_env: OPENROUTER_API_KEY
+  
   timeout_seconds: 120
 
 features:

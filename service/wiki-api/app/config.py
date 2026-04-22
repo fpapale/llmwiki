@@ -38,6 +38,7 @@ class Settings(BaseSettings):
     
     # Secrets that will be picked up from the .env or environment
     openai_api_key: str = Field(default="mock_key", alias="OPENAI_API_KEY")
+    openrouter_api_key: str = Field(default="mock_key", alias="OPENROUTER_API_KEY")
 
 def load_config() -> Settings:
     config_path = os.environ.get("WIKI_API_CONFIG_PATH", "../../runtime/config/config.yaml")
