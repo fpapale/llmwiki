@@ -1,0 +1,26 @@
+app:
+  name: wiki-api
+  host: 0.0.0.0
+  port: 8080
+  log_level: INFO
+
+paths:
+  vault_root: ../../
+  raw_dir: ../../raw
+  wiki_dir: ../../wiki
+  schema_dir: ../../wiki
+  agent_file: ../../wiki/AGENT.MD
+  index_file: ../../wiki/index.md
+  log_file: ../../wiki/log.md
+
+llm:
+  enabled: true
+  provider: openai
+  base_url: https://api.openai.com/v1
+  model: gpt-4o-mini
+  api_key_env: OPENAI_API_KEY
+  timeout_seconds: 120
+
+features:
+  enable_fallback_query: true
+  enable_mock_llm: true
