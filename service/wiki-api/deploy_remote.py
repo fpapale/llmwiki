@@ -20,7 +20,7 @@ try:
     # Prepare deployment directory in user's home
     commands = [
         f"mkdir -p ~/{remote_root}",
-        f"cd ~/{remote_root} && if [ -d '.git' ]; then git pull; else git clone https://github.com/fpapale/llmwiki.git .; fi",
+        f"cd ~/{remote_root} && if [ -d '.git' ]; then git reset --hard && git clean -fd && git pull; else git clone https://github.com/fpapale/llmwiki.git .; fi",
         f"mkdir -p ~/{remote_root}/runtime/config"
     ]
 
@@ -33,9 +33,7 @@ try:
     sftp = ssh.open_sftp()
     
     files_to_transfer = [
-        ("runtime/config/config.docker.yml", f"{remote_root}/runtime/config/config.docker.yml"),
-        ("runtime/config/secrets.env", f"{remote_root}/runtime/config/secrets.env"),
-        ("install.sh", f"{remote_root}/install.sh")
+        ("runtime/config/secrets.env", f"{remote_root}/runtime/config/secrets.env")
     ]
     
     for local_rel, remote_rel in files_to_transfer:
