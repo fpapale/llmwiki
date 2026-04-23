@@ -29,7 +29,7 @@ def get_unprocessed_sources():
     path_service = get_path_service()
     
     raw_files = file_service.list_files(path_service.config.raw_dir)
-    valid_exts = [".md", ".pdf"]
+    valid_exts = [".md", ".pdf", ".docx", ".xlsx"]
     raw_files = [f for f in raw_files if os.path.splitext(f)[1].lower() in valid_exts]
     
     wiki_files = file_service.list_files(path_service.config.wiki_dir, extension="-summary.md")

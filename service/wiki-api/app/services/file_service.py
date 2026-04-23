@@ -18,6 +18,22 @@ class FileService:
                 for page in reader.pages:
                     text += (page.extract_text() or "") + "\n"
             return text
+        elif ext == '.docx':
+            import docx
+            doc = docx.Document(file_path)
+            return "\n".join([para.text for para in doc.paragraphs])
+        elif ext == '.xlsx':
+            import openpyxl
+            wb = openpyxl.load_workbook(file_path, data_only=True)
+            text = ""
+            for sheet in wb.worksheets:
+                text += f"--- Sheet: {sheet.title} ---\n"
+                for row in sheet.iter_rows(values_only=True):
+                    # Filter out None values and join row data
+                    row_text = "\t".join([str(cell) for cell in row if cell is not None])
+                    if row_text.strip():
+                        text += row_text + "\n"
+            return text
         else:
             with open(file_path, "r", encoding="utf-8") as f:
                 return f.read()

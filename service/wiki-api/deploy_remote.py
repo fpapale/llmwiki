@@ -27,6 +27,12 @@ try:
     for cmd in commands:
         print(f"\nExecuting: {cmd}")
         stdin, stdout, stderr = ssh.exec_command(cmd)
+        for line in stdout:
+            sys.stdout.buffer.write(line.encode('utf-8', 'replace'))
+            sys.stdout.flush()
+        for line in stderr:
+            sys.stderr.buffer.write(line.encode('utf-8', 'replace'))
+            sys.stderr.flush()
         stdout.channel.recv_exit_status() # Wait for completion
 
     print("\nTransferring local files via SFTP...")
