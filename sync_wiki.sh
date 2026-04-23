@@ -51,7 +51,7 @@ fi
 log "trovati commit non pushati, sincronizzo..."
 
 # Allineamento col remoto
-if ! git pull --rebase origin main; then
+if ! git pull --rebase --autostash origin main; then
   log "errore durante git pull --rebase origin main"
   exit 1
 fi
