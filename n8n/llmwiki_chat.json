@@ -45,7 +45,7 @@
       "typeVersion": 2,
       "position": [520, 0],
       "parameters": {
-        "jsCode": "const answer = $input.first().json.answer || 'Nessuna risposta trovata.';\nconst sources = $input.first().json.sources || [];\n\nlet output = answer;\n\nif (sources.length > 0) {\n  output += '\\n\\n---\\n**Fonti consultate:**';\n  sources.forEach((s, i) => {\n    output += `\\n${i + 1}. \\`${s}\\``;\n  });\n}\n\nreturn [{ json: { output } }];"
+        "jsCode": "const answer = $input.first().json.answer || '_Nessuna risposta trovata._';\nconst sources = $input.first().json.sources || [];\n\n// Timestamp italiano\nconst now = new Date().toLocaleString('it-IT', { timeZone: 'Europe/Rome' });\n\n// Corpo risposta\nlet md = `## Risposta\\n\\n${answer}`;\n\n// Sezione fonti\nif (sources.length > 0) {\n  md += '\\n\\n---\\n\\n### Fonti consultate\\n\\n';\n  sources.forEach((s, i) => {\n    const filename = s.split('/').pop();\n    md += `${i + 1}. \\`${filename}\\`\\n   _percorso: ${s}_\\n`;\n  });\n} else {\n  md += '\\n\\n---\\n\\n> Nessuna fonte specifica individuata per questa risposta.';\n}\n\n// Footer\nmd += `\\n\\n---\\n_Risposta generata il ${now}_`;\n\nreturn [{ json: { output: md } }];"
       }
     }
   ],
