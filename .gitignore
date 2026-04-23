@@ -4,3 +4,4 @@ __pycache__/
 .env
 secrets.env
 .pytest_cache/
+sync_wiki.log
