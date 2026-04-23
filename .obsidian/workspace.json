@@ -11,14 +11,13 @@
             "id": "9440d330a6a5d82d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "bases",
               "state": {
-                "file": "raw/assets/n8n-test-source.md",
-                "mode": "source",
-                "source": false
+                "file": "Senza nome.base",
+                "viewName": "Tabella"
               },
-              "icon": "lucide-file",
-              "title": "n8n-test-source"
+              "icon": "lucide-table",
+              "title": "Senza nome"
             }
           }
         ]
@@ -193,9 +192,9 @@
   },
   "active": "9440d330a6a5d82d",
   "lastOpenFiles": [
+    "raw/assets/n8n-test-source.md",
     "raw/assets/cliente-acme-nota.md",
     "wiki/n8n-test-source-summary.md",
-    "raw/assets/n8n-test-source.md",
     "raw/assets",
     "raw/asset",
     "raw/Nuova cartella",
