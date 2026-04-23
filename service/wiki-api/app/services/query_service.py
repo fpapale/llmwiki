@@ -13,6 +13,11 @@ class QueryService:
     def run_query(self, question: str) -> tuple[str, list[str]]:
         # Read index and log for context
         index_content = self.index_service.get_index()
+        
+        # Se ci sono righe di fonti aggiunte (es. '- ['), rimuoviamo il placeholder per non confondere l'LLM
+        if "*Nessuna fonte indicizzata al momento.*" in index_content and "- [" in index_content:
+            index_content = index_content.replace("*Nessuna fonte indicizzata al momento.*", "")
+            
         log_content = self.log_service.get_logs()
         
         context = f"INDEX:\n{index_content}\n\nLOG:\n{log_content}"

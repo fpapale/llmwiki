@@ -14,5 +14,12 @@ class IndexService:
     def add_entry(self, entry: str) -> None:
         # Simplistic append for MVP. In reality, we'd parse and insert into the correct section.
         content = self.get_index()
+        
+        # Rimuovi il placeholder se esiste
+        placeholder = "*Nessuna fonte indicizzata al momento.*"
+        if placeholder in content:
+            content = content.replace(placeholder, "")
+            
         if entry not in content:
-            self.file_service.append_file(self.index_file_path, f"\n{entry}\n")
+            content = content.rstrip() + f"\n\n{entry}\n"
+            self.file_service.write_file(self.index_file_path, content)
