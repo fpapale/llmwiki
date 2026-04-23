@@ -11,13 +11,10 @@
             "id": "9440d330a6a5d82d",
             "type": "leaf",
             "state": {
-              "type": "bases",
-              "state": {
-                "file": "Senza nome.base",
-                "viewName": "Tabella"
-              },
-              "icon": "lucide-table",
-              "title": "Senza nome"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Nuova scheda"
             }
           }
         ]
@@ -190,26 +187,40 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "9440d330a6a5d82d",
+  "active": "b7c3df271e47c3c8",
   "lastOpenFiles": [
-    "raw/assets/n8n-test-source.md",
+    "Senza nome 1.base",
+    "Senza nome 2.base",
+    "Senza nome.base",
+    "Clippings/Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo.md",
+    "Clippings",
+    "wiki/000-summary.md",
+    "wiki/001-summary.md",
+    "wiki/003-summary.md",
+    "wiki/002-summary.md",
+    "raw/assets/005.pdf",
     "raw/assets/cliente-acme-nota.md",
+    "wiki/test-summary.md",
+    "wiki/007-summary.md",
+    "wiki/006_Simulazione_algoritmi_clustering-summary.md",
+    "wiki/005-summary.md",
+    "wiki/004-summary.md",
+    "raw/test.md",
+    "raw/assets/007.pdf",
+    "raw/assets/006_Simulazione_algoritmi_clustering.pdf",
+    "raw/assets/004.pdf",
+    "raw/assets/003.pdf",
+    "raw/assets/002.pdf",
+    "raw/assets/001.pdf",
+    "raw/assets/n8n-test-source.md",
     "wiki/n8n-test-source-summary.md",
-    "raw/assets",
-    "raw/asset",
-    "raw/Nuova cartella",
     "wiki/log.md",
     "wiki/index.md",
     "wiki/cliente-acme-nota-summary.md",
-    "Senza nome 1.base",
     "2026-04-23.md",
-    "Senza nome.base",
     "README.md",
-    "sync_wiki.sh",
     "raw/cliente-acme-nota.md",
     "raw/n8n-test-source.md",
-    "raw",
-    "Senza nome 2.base",
     "schema.md",
     "handoff.md"
   ]
