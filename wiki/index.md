@@ -27,3 +27,7 @@ Catalogo orientato ai contenuti per indicizzare i file generati nel wiki.
 - [004-summary.md](004-summary.md): Summary of 004.pdf
 
 - [test-summary.md](test-summary.md): Summary of test.md
+
+- [Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo-summary.md](Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo-summary.md): Summary of Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo.md
+
+- [Tesi_Lorenzo_Zulli-summary.md](Tesi_Lorenzo_Zulli-summary.md): Summary of Tesi_Lorenzo_Zulli.pdf

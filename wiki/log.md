@@ -89,3 +89,13 @@ Inizializzata la struttura base del wiki, comprendente le cartelle `raw`, `wiki`
 - created: wiki/007-summary.md
 - updated: wiki/index.md
 - updated: wiki/log.md
+
+## [2026-04-23 20:12:36] ingest | Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo.md
+- created: wiki/Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
+
+## [2026-04-23 20:12:49] ingest | Tesi_Lorenzo_Zulli.pdf
+- created: wiki/Tesi_Lorenzo_Zulli-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
