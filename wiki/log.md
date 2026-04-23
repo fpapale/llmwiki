@@ -59,3 +59,33 @@ Inizializzata la struttura base del wiki, comprendente le cartelle `raw`, `wiki`
 - created: wiki/001-summary.md
 - updated: wiki/index.md
 - updated: wiki/log.md
+
+## [2026-04-23 19:13:02] ingest | 000.pdf
+- created: wiki/000-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
+
+## [2026-04-23 19:13:04] ingest | 002.pdf
+- created: wiki/002-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
+
+## [2026-04-23 19:13:10] ingest | 004.pdf
+- created: wiki/004-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
+
+## [2026-04-23 19:13:11] ingest | 005.pdf
+- created: wiki/005-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
+
+## [2026-04-23 19:13:12] ingest | 003.pdf
+- created: wiki/003-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
+
+## [2026-04-23 19:13:15] ingest | 007.pdf
+- created: wiki/007-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
