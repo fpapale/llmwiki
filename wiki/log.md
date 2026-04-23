@@ -49,3 +49,13 @@ Inizializzata la struttura base del wiki, comprendente le cartelle `raw`, `wiki`
 - created: wiki/test-summary.md
 - updated: wiki/index.md
 - updated: wiki/log.md
+
+## [2026-04-23 19:12:54] ingest | 006_Simulazione_algoritmi_clustering.pdf
+- created: wiki/006_Simulazione_algoritmi_clustering-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
+
+## [2026-04-23 19:12:56] ingest | 001.pdf
+- created: wiki/001-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
