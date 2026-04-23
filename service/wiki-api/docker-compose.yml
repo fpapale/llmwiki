@@ -9,5 +9,5 @@ services:
       - ../../runtime/config:/config:ro
       - ../../:/vault
     environment:
-      - WIKI_API_CONFIG_PATH=/config/config.docker.yaml
+      - WIKI_API_CONFIG_PATH=/config/config.docker.yml
       - WIKI_API_SECRETS_PATH=/config/secrets.env

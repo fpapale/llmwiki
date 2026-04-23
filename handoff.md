@@ -30,21 +30,21 @@ Il motore LLM (`app/services/llm_service.py`) è in grado di funzionare in **due
 1. **Mock Mode** (`enable_mock_llm: true`): Perfetto per lo sviluppo locale e i test, non effettua chiamate di rete e restituisce risposte simulate, permettendo di testare il flusso (ingest e update del log) a costo zero.
 2. **Real Mode** (`enable_mock_llm: false`): Instanzia il client ufficiale `openai`. Leggendo il file YAML, è capace di utilizzare sia le API dirette di **OpenAI** sia le API di **OpenRouter** (cambiando la variabile `api_key_env` e il `base_url`).
 
-## 🐳 Pronto per il Deploy
-Tutto è stato impacchettato e predisposto per girare sul server remoto locale (`192.168.0.68`):
-- È presente un `Dockerfile` (leggero e basato su Python 3.11 slim) completo di file `.dockerignore` per escludere file non necessari.
-- È presente un `docker-compose.yml` pre-configurato. Esso monta la directory di configurazione in `/config` e **l'intera root del vault** in `/vault`.
-- È stato introdotto un file specifico **`config.docker.yml`**, i cui path sono già ottimizzati in base alla struttura dei mount interni al container.
+## 🐳 Deploy e Ambiente di Produzione
+L'applicazione è attualmente pubblicata e in esecuzione come container Docker sul server remoto locale `192.168.0.68` (nella directory `~/docker/llmwiki`).
+- È presente un `Dockerfile` (leggero e basato su Python 3.11 slim) completo di file `.dockerignore`.
+- Il `docker-compose.yml` è configurato per montare la directory di configurazione in `/config` e l'intera root del vault in `/vault`. Viene inoltre utilizzato il file specifico `config.docker.yml`.
+- È stato creato uno script `install.sh` ed è stato ottimizzato lo script Python `service/wiki-api/deploy_remote.py`. Quest'ultimo automatizza il deploy collegandosi via SSH, aggiornando il repository tramite git pull, trasferendo i file non tracciati o modificati (come `secrets.env` e `config.docker.yml`) via SFTP, e lanciando l'installazione su Docker Compose.
 
 ## 🧪 Testing e Qualità
 - Tutti i test richiesti (Healthcheck, Config, Endpoints di base e flussi LLM mockati) sono stati implementati utilizzando `pytest`.
 - I test passano con successo in ambiente locale.
 
 ## 📦 Versionamento
-L'intero blocco di codice (incluso un esaustivo `README.md` sotto `service/wiki-api/` contenente le istruzioni di setup, avvio e `curl` di test) è stato "tracciato" e "pushato" con successo sul branch `main` del repository GitHub: **[fpapale/llmwiki](https://github.com/fpapale/llmwiki)**.
+L'intero blocco di codice (incluso un esaustivo `README.md` sotto `service/wiki-api/` contenente le istruzioni di setup) è costantemente allineato sul branch `main` del repository GitHub: **[fpapale/llmwiki](https://github.com/fpapale/llmwiki)**.
 
 ---
-**Prossimi Passi Consigliati**:
-1. Inserire la propria vera API Key (es: `OPENROUTER_API_KEY`) nel file `secrets.env`.
-2. Eseguire l'applicazione in modalità `mock: false` per fare i test sul campo con gli LLM reali.
-3. Effettuare un test di deploy clonando il repo su `192.168.0.68` ed eseguendo `docker compose up -d`.
+**Stato Attuale e Prossimi Passi**:
+1. **Ambiente Live**: Il servizio risponde su `http://192.168.0.68:8080/` ed è pronto a ricevere chiamate REST.
+2. **Motore LLM Attivo**: L'impostazione `enable_mock_llm` è stata modificata a `false` nel file `config.docker.yml`. Questo significa che il server sta utilizzando i veri servizi AI (tramite la chiave configurata in `secrets.env`).
+3. **Prossimo Step - Integrazione**: Procedere all'integrazione di questi endpoint all'interno dei workflow di **n8n** per avviare l'orchestrazione automatica tra Ingestione, Query e la UI.
