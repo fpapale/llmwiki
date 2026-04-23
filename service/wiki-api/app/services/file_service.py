@@ -8,8 +8,19 @@ class FileService:
     def read_file(self, file_path: str) -> str:
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"File not found: {file_path}")
-        with open(file_path, "r", encoding="utf-8") as f:
-            return f.read()
+            
+        ext = os.path.splitext(file_path)[1].lower()
+        if ext == '.pdf':
+            import pypdf
+            text = ""
+            with open(file_path, "rb") as f:
+                reader = pypdf.PdfReader(f)
+                for page in reader.pages:
+                    text += (page.extract_text() or "") + "\n"
+            return text
+        else:
+            with open(file_path, "r", encoding="utf-8") as f:
+                return f.read()
 
     def write_file(self, file_path: str, content: str) -> None:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
