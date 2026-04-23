@@ -27,19 +27,28 @@ if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   exit 1
 fi
 
-# Aggiungi solo i path che vuoi davvero sincronizzare
-git add raw wiki AGENT.MD schema.md README.md 2>/dev/null || true
+# Aggiungi solo i path che vuoi davvero sincronizzare (incluso assets)
+git add raw raw/assets wiki AGENT.MD schema.md README.md 2>/dev/null || true
 
-# Se non ci sono modifiche staged, esci senza errori
+# Se ci sono modifiche staged, crea un commit
 if git diff --cached --quiet; then
-  log "nessuna modifica da sincronizzare."
+  log "nessuna nuova modifica da committare."
+else
+  COMMIT_MSG="auto-sync: wiki update $(date '+%Y-%m-%d %H:%M:%S')"
+  git commit -m "$COMMIT_MSG"
+  log "commit creato: $COMMIT_MSG"
+fi
+
+# Controlla se ci sono commit locali non ancora pushati
+LOCAL=$(git rev-parse HEAD)
+REMOTE=$(git rev-parse origin/main 2>/dev/null || echo "none")
+
+if [ "$LOCAL" = "$REMOTE" ]; then
+  log "nulla da pushare, tutto allineato."
   exit 0
 fi
 
-COMMIT_MSG="auto-sync: wiki update $(date '+%Y-%m-%d %H:%M:%S')"
-
-git commit -m "$COMMIT_MSG"
-log "commit creato: $COMMIT_MSG"
+log "trovati commit non pushati, sincronizzo..."
 
 # Allineamento col remoto
 if ! git pull --rebase origin main; then
