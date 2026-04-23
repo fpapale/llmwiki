@@ -48,12 +48,26 @@ if [ "$LOCAL" = "$REMOTE" ]; then
   exit 0
 fi
 
-log "trovati commit non pushati, sincronizzo..."
+# Salva lo stato di eventuali modifiche non stagiate e file untracked
+STASHED=0
+if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+  git stash push -u -m "temp stash before pull" >/dev/null 2>&1 || true
+  STASHED=1
+fi
 
 # Allineamento col remoto
-if ! git pull --rebase --autostash origin main; then
-  log "errore durante git pull --rebase origin main"
+if ! git pull --rebase origin main; then
+  log "errore durante git pull --rebase origin main. Annullo rebase..."
+  git rebase --abort >/dev/null 2>&1 || true
+  if [ $STASHED -eq 1 ]; then
+    git stash pop >/dev/null 2>&1 || true
+  fi
   exit 1
+fi
+
+# Ripristina file stasati se presenti
+if [ $STASHED -eq 1 ]; then
+  git stash pop >/dev/null 2>&1 || log "attenzione: conflitti durante il ripristino dello stash (richiede intervento manuale)"
 fi
 
 # Push finale
