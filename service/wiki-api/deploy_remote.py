@@ -20,7 +20,7 @@ try:
     # Prepare deployment directory in user's home
     commands = [
         f"mkdir -p ~/{remote_root}",
-        f"cd ~/{remote_root} && if [ -d '.git' ]; then git reset --hard && git clean -fd && git pull; else git clone https://github.com/fpapale/llmwiki.git .; fi",
+        f"cd ~/{remote_root} && if [ -d '.git' ]; then git fetch --all && git reset --hard origin/main && git clean -fd; else git clone https://github.com/fpapale/llmwiki.git .; fi",
         f"mkdir -p ~/{remote_root}/runtime/config"
     ]
 
