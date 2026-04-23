@@ -28,15 +28,18 @@ def get_unprocessed_sources():
     file_service = get_file_service()
     path_service = get_path_service()
     
-    raw_files = file_service.list_files(path_service.config.raw_dir, extension=".md")
+    raw_files = file_service.list_files(path_service.config.raw_dir)
+    valid_exts = [".md", ".pdf", ".docx", ".xlsx"]
+    raw_files = [f for f in raw_files if os.path.splitext(f)[1].lower() in valid_exts]
+    
     wiki_files = file_service.list_files(path_service.config.wiki_dir, extension="-summary.md")
     
     # Extract basenames without '-summary.md'
-    processed_basenames = [os.path.basename(wf).replace("-summary.md", ".md") for wf in wiki_files]
+    processed_basenames = [os.path.basename(wf).replace("-summary.md", "") for wf in wiki_files]
     
     unprocessed = []
     for rf in raw_files:
-        basename = os.path.basename(rf)
+        basename = os.path.splitext(os.path.basename(rf))[0]
         if basename not in processed_basenames:
             # Return relative path e.g. "raw/filename.md"
             rel_path = os.path.relpath(rf, path_service.config.vault_root)

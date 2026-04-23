@@ -2,6 +2,8 @@
 
 LLMWiki è una knowledge base (Wiki) "filesystem-oriented" potenziata dall'Intelligenza Artificiale (LLM). L'obiettivo è quello di fornire un sistema per gestire, ingerire ed interrogare fonti di conoscenza in formato Markdown tramite agenti e flussi automatizzati (ad es. n8n).
 
+
+
 L'architettura separa nettamente i dati di runtime (file wiki, configurazioni, sorgenti) dall'applicazione backend che gestisce l'elaborazione.
 
 ## Struttura del Progetto
