@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "handoff.md",
+                "file": "raw/assets/n8n-test-source.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "handoff"
+              "title": "n8n-test-source"
             }
           }
         ]
@@ -191,10 +191,27 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "521c5fccede0abd1",
+  "active": "9440d330a6a5d82d",
   "lastOpenFiles": [
-    "schema.md",
+    "raw/assets/cliente-acme-nota.md",
+    "wiki/n8n-test-source-summary.md",
+    "raw/assets/n8n-test-source.md",
+    "raw/assets",
+    "raw/asset",
+    "raw/Nuova cartella",
     "wiki/log.md",
-    "wiki/index.md"
+    "wiki/index.md",
+    "wiki/cliente-acme-nota-summary.md",
+    "Senza nome 1.base",
+    "2026-04-23.md",
+    "Senza nome.base",
+    "README.md",
+    "sync_wiki.sh",
+    "raw/cliente-acme-nota.md",
+    "raw/n8n-test-source.md",
+    "raw",
+    "Senza nome 2.base",
+    "schema.md",
+    "handoff.md"
   ]
 }
