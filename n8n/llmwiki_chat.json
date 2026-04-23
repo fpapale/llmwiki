@@ -1,0 +1,67 @@
+{
+  "name": "LLMWiki - Chat con i Dati",
+  "nodes": [
+    {
+      "id": "chat-1",
+      "name": "Chat Trigger",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [0, 0],
+      "parameters": {
+        "public": true,
+        "options": {
+          "title": "LLMWiki Chat",
+          "subtitle": "Fai domande sui documenti della wiki",
+          "inputPlaceholder": "Es: Dimmi tutto su..."
+        }
+      },
+      "webhookId": "9e9e944b-9d0c-4335-a532-dc3dfc1f580e"
+    },
+    {
+      "id": "chat-2",
+      "name": "Chiama Query API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [260, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.68:8080/query/run",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"question\": \"{{ $json.chatInput }}\" }",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "chat-3",
+      "name": "Formatta Risposta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 0],
+      "parameters": {
+        "jsCode": "const answer = $input.first().json.answer || 'Nessuna risposta trovata.';\nconst sources = $input.first().json.sources || [];\n\nlet output = answer;\n\nif (sources.length > 0) {\n  output += '\\n\\n---\\n**Fonti consultate:**';\n  sources.forEach((s, i) => {\n    output += `\\n${i + 1}. \\`${s}\\``;\n  });\n}\n\nreturn [{ json: { output } }];"
+      }
+    }
+  ],
+  "connections": {
+    "Chat Trigger": {
+      "main": [[{"node": "Chiama Query API", "type": "main", "index": 0}]]
+    },
+    "Chiama Query API": {
+      "main": [[{"node": "Formatta Risposta", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true
+  }
+}

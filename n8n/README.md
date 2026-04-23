@@ -1,12 +1,17 @@
-# 🔄 n8n Workflow — LLMWiki Ingestione Automatica Raw
+# 🔄 n8n Workflows — LLMWiki
 
-Questo documento spiega come installare, configurare e utilizzare il workflow n8n che automatizza l'ingestione dei documenti nel sistema **LLMWiki**.
+Questo documento descrive i workflow n8n che gestiscono l'automazione del sistema **LLMWiki**:
+
+| Workflow | File | Funzione |
+|---|---|---|
+| **Ingestione Automatica Raw** | `llmwiki_ingestione_automatica.json` | Processa automaticamente i nuovi file ogni 15 min |
+| **Chat con i Dati** | `llmwiki_chat.json` | Interfaccia chat per interrogare i dati ingestionati |
 
 ---
 
 ## 📋 Prerequisiti
 
-Prima di importare il workflow, assicurati che:
+Prima di importare i workflow, assicurati che:
 
 | Componente | Requisito |
 |---|---|
@@ -19,28 +24,23 @@ Prima di importare il workflow, assicurati che:
 ## 🏗️ Architettura del Sistema
 
 ```
-┌─────────────┐       ogni 15 min       ┌────────────────────────────────────┐
-│  n8n        │ ─────────────────────── │  Server 192.168.0.68               │
-│  (scheduler)│                         │                                    │
-│             │ GET /sources/unprocessed│  ┌─────────────┐                   │
-│             │ ──────────────────────► │  │  wiki-api   │ :8080             │
-│             │ ◄────────────────────── │  │  (FastAPI)  │                   │
-│             │  ["raw/doc.pdf", ...]   │  └──────┬──────┘                   │
-│             │                         │         │ legge file                │
-│             │ POST /ingest/run        │  ┌──────▼──────┐                   │
-│             │ {source_path, mode}     │  │  raw/       │ (volume Docker)   │
-│             │ ──────────────────────► │  │  ├─ *.md    │                   │
-│             │ ◄────────────────────── │  │  └─ assets/ │                   │
-│             │  {"status": "ok"}       │  │     ├─ *.pdf│                   │
-└─────────────┘                         │  │     ├─ *.docx                   │
-                                        │  │     └─ *.xlsx                   │
-                                        │  └─────────────┘                   │
-                                        │                                    │
-                                        │  ┌─────────────┐                   │
-                                        │  │  wiki/      │ → output Obsidian │
-                                        │  │  *-summary.md                   │
-                                        │  └─────────────┘                   │
-                                        └────────────────────────────────────┘
+┌─────────────────────────────────────────┐       ┌────────────────────────────────────┐
+│  n8n                                    │       │  Server 192.168.0.68               │
+│                                         │       │                                    │
+│  Flusso 1: Ingestione Automatica        │       │  ┌─────────────┐                   │
+│  ┌─────────────────────────────────┐    │       │  │  wiki-api   │ :8080             │
+│  │ Schedule Trigger (ogni 15 min)  │    │       │  │  (FastAPI)  │                   │
+│  │ → Get /sources/unprocessed      │────┼──────►│  └──────┬──────┘                   │
+│  │ → POST /ingest/run per file     │    │       │         │ legge/scrive              │
+│  └─────────────────────────────────┘    │       │  ┌──────▼──────┐                   │
+│                                         │       │  │  raw/       │ (volume Docker)   │
+│  Flusso 2: Chat                         │       │  │  wiki/      │                   │
+│  ┌─────────────────────────────────┐    │       │  └─────────────┘                   │
+│  │ Chat Trigger (UI pubblica)      │    │       │                                    │
+│  │ → POST /query/run               │────┼──────►│                                    │
+│  │ → Formatta risposta + fonti     │    │       │                                    │
+│  └─────────────────────────────────┘    │       └────────────────────────────────────┘
+└─────────────────────────────────────────┘
 ```
 
 ---
@@ -79,12 +79,14 @@ http://192.168.0.68:5678
 
 Al primo accesso, crea un account amministratore (rimane locale, non richiede connessione internet).
 
-### 3. Importare il Workflow
+### 3. Importare i Workflow
+
+Per ciascun file JSON nella directory `n8n/`:
 
 1. Nella sidebar sinistra, clicca su **Workflows**
 2. Clicca sul pulsante **⊕ Add workflow** (in alto a destra)
 3. Nel menu del workflow, clicca su **···** → **Import from File**
-4. Seleziona il file: `n8n/llmwiki_ingestione_automatica.json`
+4. Seleziona il file JSON desiderato
 5. Il workflow viene importato con tutti i nodi configurati
 
 ### 4. Verificare la Connettività
@@ -100,17 +102,18 @@ curl http://192.168.0.68:8080/health
 # Risposta attesa: {"status": "ok"}
 ```
 
-### 5. Attivare il Workflow
+### 5. Attivare i Workflow
 
 1. Apri il workflow importato
 2. Clicca il toggle **Inactive → Active** in alto a destra
-3. Il workflow inizierà a girare automaticamente ogni **15 minuti**
 
 ---
 
-## ⚙️ Come Funziona il Workflow (Nodo per Nodo)
+## 📄 Workflow 1 — Ingestione Automatica Raw
 
-Il workflow è composto da **4 nodi** in sequenza:
+**File:** `llmwiki_ingestione_automatica.json`
+
+Questo workflow si avvia automaticamente e processa i file nuovi nella directory `raw/`.
 
 ```
 [Schedule Trigger] → [Get Unprocessed] → [Split Items] → [Ingest File]
@@ -203,6 +206,97 @@ La wiki-api:
 
 ---
 
+## 💬 Workflow 2 — Chat con i Dati
+
+**File:** `llmwiki_chat.json`
+
+Questo workflow espone una **interfaccia chat pubblica** che permette agli utenti di fare domande sui documenti già ingestionati nella wiki.
+
+```
+[Chat Trigger] → [Chiama Query API] → [Formatta Risposta]
+```
+
+### Come accedere alla chat
+
+Una volta attivato il workflow in n8n, la chat è accessibile all'URL pubblico mostrato nel nodo **Chat Trigger**. Di solito:
+
+```
+https://<tuo-n8n>/webhook/<webhookId>/chat
+```
+
+Oppure direttamente dall'interfaccia n8n cliccando su **"Open Chat"** nel pannello del trigger.
+
+---
+
+### Nodo 1 — Chat Trigger 💬
+
+| Campo | Valore |
+|---|---|
+| Tipo | `@n8n/n8n-nodes-langchain.chatTrigger` |
+| Accesso | Pubblico (no autenticazione richiesta) |
+| Titolo UI | `LLMWiki Chat` |
+| Placeholder | `Es: Dimmi tutto su...` |
+
+Il trigger riceve i messaggi dell'utente e li passa al nodo successivo come campo `chatInput`.
+
+---
+
+### Nodo 2 — Chiama Query API 🔍
+
+| Campo | Valore |
+|---|---|
+| Tipo | `HTTP Request POST` |
+| URL | `http://192.168.0.68:8080/query/run` |
+| Body | `{ "question": "{{ $json.chatInput }}" }` |
+
+Chiama l'endpoint `/query/run` della wiki-api con la domanda dell'utente.
+
+**Richiesta inviata:**
+```json
+{
+  "question": "Di cosa parla il documento X?"
+}
+```
+
+**Risposta ricevuta:**
+```json
+{
+  "answer": "Il documento X parla di...",
+  "sources": ["wiki/documento-x-summary.md"]
+}
+```
+
+---
+
+### Nodo 3 — Formatta Risposta ✍️
+
+| Campo | Valore |
+|---|---|
+| Tipo | `Code` (JavaScript) |
+| Funzione | Compone la risposta finale con risposta + elenco fonti |
+
+```javascript
+const answer = $input.first().json.answer || 'Nessuna risposta trovata.';
+const sources = $input.first().json.sources || [];
+
+let output = answer;
+
+if (sources.length > 0) {
+  output += '\n\n---\n**Fonti consultate:**';
+  sources.forEach((s, i) => {
+    output += `\n${i + 1}. \`${s}\``;
+  });
+}
+
+return [{ json: { output } }];
+```
+
+La risposta mostrata all'utente in chat include:
+- La risposta testuale generata dall'LLM
+- L'elenco delle fonti (file wiki) consultate per generare la risposta
+
+---
+
 ## 📂 Formati di File Supportati
 
 | Formato | Estensione | Directory |
@@ -218,11 +312,12 @@ La wiki-api:
 
 ### Cambiare il Server API
 
-Se la wiki-api viene spostata su un altro IP/porta, modifica i nodi **Get Unprocessed** e **Ingest File** aggiornando l'URL:
+Se la wiki-api viene spostata su un altro IP/porta, modifica i nodi HTTP Request in entrambi i workflow aggiornando l'URL base:
 
 ```
 http://<NUOVO_IP>:<NUOVA_PORTA>/sources/unprocessed
 http://<NUOVO_IP>:<NUOVA_PORTA>/ingest/run
+http://<NUOVO_IP>:<NUOVA_PORTA>/query/run
 ```
 
 ### Cambiare la Modalità di Ingestione
@@ -275,6 +370,18 @@ docker logs wiki-api --tail 100 | grep ERROR
 cat ~/docker/llmwiki/runtime/config/secrets.env
 ```
 
+### La chat non risponde
+
+```bash
+# Verifica che l'endpoint /query/run funzioni
+curl -X POST http://192.168.0.68:8080/query/run \
+  -H "Content-Type: application/json" \
+  -d '{"question": "test"}'
+
+# Assicurati che ci siano documenti già ingestionati in wiki/
+ls ~/docker/llmwiki/wiki/
+```
+
 ---
 
 ## 🔁 Flusso Completo End-to-End
@@ -284,15 +391,23 @@ cat ~/docker/llmwiki/runtime/config/secrets.env
       ↓
 2. sync_wiki.sh (cron ogni N minuti) → git push su GitHub
       ↓
-3. n8n (Schedule Trigger ogni 15 min) → GET /sources/unprocessed
+3. n8n — Flusso 1: Schedule Trigger ogni 15 min
       ↓
-4. wiki-api risponde con lista file non processati
+4. GET /sources/unprocessed → lista file non processati
       ↓
-5. n8n → POST /ingest/run per ogni file
+5. POST /ingest/run per ogni file
       ↓
 6. wiki-api: parsing (PDF/DOCX/XLSX) → LLM → summary.md in wiki/
       ↓
 7. sync_wiki.sh → git push dei summary generati su GitHub
       ↓
 8. git pull sul PC locale → summary disponibili in Obsidian
+      ↓
+9. Utente apre la Chat n8n (Flusso 2)
+      ↓
+10. Digita una domanda → POST /query/run
+      ↓
+11. wiki-api cerca nei summary → risposta + fonti
+      ↓
+12. Risposta mostrata in chat con elenco fonti consultate
 ```
