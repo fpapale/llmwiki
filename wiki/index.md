@@ -25,3 +25,5 @@ Catalogo orientato ai contenuti per indicizzare i file generati nel wiki.
 - [007-summary.md](007-summary.md): Summary of 007.pdf
 
 - [004-summary.md](004-summary.md): Summary of 004.pdf
+
+- [test-summary.md](test-summary.md): Summary of test.md

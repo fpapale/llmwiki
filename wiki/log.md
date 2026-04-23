@@ -44,3 +44,8 @@ Inizializzata la struttura base del wiki, comprendente le cartelle `raw`, `wiki`
 - created: wiki/004-summary.md
 - updated: wiki/index.md
 - updated: wiki/log.md
+
+## [2026-04-23 15:30:58] ingest | test.md
+- created: wiki/test-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
