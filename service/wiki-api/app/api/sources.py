@@ -22,3 +22,25 @@ def import_source(req: ImportSourceRequest):
     file_service.write_file(file_path, req.content)
     
     return {"path": file_path}
+
+@router.get("/unprocessed")
+def get_unprocessed_sources():
+    file_service = get_file_service()
+    path_service = get_path_service()
+    
+    raw_files = file_service.list_files(path_service.config.raw_dir, extension=".md")
+    wiki_files = file_service.list_files(path_service.config.wiki_dir, extension="-summary.md")
+    
+    # Extract basenames without '-summary.md'
+    processed_basenames = [os.path.basename(wf).replace("-summary.md", ".md") for wf in wiki_files]
+    
+    unprocessed = []
+    for rf in raw_files:
+        basename = os.path.basename(rf)
+        if basename not in processed_basenames:
+            # Return relative path e.g. "raw/filename.md"
+            rel_path = os.path.relpath(rf, path_service.config.vault_root)
+            # Ensure forward slashes
+            unprocessed.append(rel_path.replace("\\", "/"))
+            
+    return {"unprocessed": unprocessed}
