@@ -11,10 +11,14 @@
             "id": "9440d330a6a5d82d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "wiki/002-summary.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nuova scheda"
+              "title": "002-summary"
             }
           }
         ]
@@ -187,36 +191,36 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b7c3df271e47c3c8",
+  "active": "9440d330a6a5d82d",
   "lastOpenFiles": [
+    "wiki/003-summary.md",
+    "wiki/005-summary.md",
+    "wiki/007-summary.md",
+    "wiki/006_Simulazione_algoritmi_clustering-summary.md",
+    "raw/assets/Tesi_Lorenzo_Zulli.pdf",
+    "Clippings/Senza nome.md",
+    "raw/assets/Non confermato 894097.crdownload",
+    "raw/Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo.md",
+    "Senza nome.base",
+    "raw/assets/000.pdf",
+    "raw/assets/007.pdf",
+    "raw/assets/006_Simulazione_algoritmi_clustering.pdf",
+    "wiki/cliente-acme-nota-summary.md",
     "Senza nome 1.base",
     "Senza nome 2.base",
-    "Senza nome.base",
-    "Clippings/Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo.md",
     "Clippings",
     "wiki/000-summary.md",
     "wiki/001-summary.md",
-    "wiki/003-summary.md",
     "wiki/002-summary.md",
     "raw/assets/005.pdf",
     "raw/assets/cliente-acme-nota.md",
     "wiki/test-summary.md",
-    "wiki/007-summary.md",
-    "wiki/006_Simulazione_algoritmi_clustering-summary.md",
-    "wiki/005-summary.md",
     "wiki/004-summary.md",
     "raw/test.md",
-    "raw/assets/007.pdf",
-    "raw/assets/006_Simulazione_algoritmi_clustering.pdf",
-    "raw/assets/004.pdf",
-    "raw/assets/003.pdf",
-    "raw/assets/002.pdf",
-    "raw/assets/001.pdf",
     "raw/assets/n8n-test-source.md",
     "wiki/n8n-test-source-summary.md",
     "wiki/log.md",
     "wiki/index.md",
-    "wiki/cliente-acme-nota-summary.md",
     "2026-04-23.md",
     "README.md",
     "raw/cliente-acme-nota.md",
