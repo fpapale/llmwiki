@@ -31,3 +31,5 @@ Catalogo orientato ai contenuti per indicizzare i file generati nel wiki.
 - [Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo-summary.md](Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo-summary.md): Summary of Insalata di barbabietole rosse e mele - Ricette Casa Pappagallo.md
 
 - [Tesi_Lorenzo_Zulli-summary.md](Tesi_Lorenzo_Zulli-summary.md): Summary of Tesi_Lorenzo_Zulli.pdf
+
+- [20220311-EB-Designing_Event_Driven_Systems-summary.md](20220311-EB-Designing_Event_Driven_Systems-summary.md): Summary of 20220311-EB-Designing_Event_Driven_Systems.pdf

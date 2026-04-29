@@ -99,3 +99,8 @@ Inizializzata la struttura base del wiki, comprendente le cartelle `raw`, `wiki`
 - created: wiki/Tesi_Lorenzo_Zulli-summary.md
 - updated: wiki/index.md
 - updated: wiki/log.md
+
+## [2026-04-29 10:31:49] ingest | 20220311-EB-Designing_Event_Driven_Systems.pdf
+- created: wiki/20220311-EB-Designing_Event_Driven_Systems-summary.md
+- updated: wiki/index.md
+- updated: wiki/log.md
